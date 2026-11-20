@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ECHOES OF TIME — Уақыт жаңғырығы</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         START SCREEN
+    ========================== -->
+
+    <section id="startScreen" class="screen start-screen">
+
+        <div class="stars"></div>
+
+        <div class="start-content">
+
+            <div class="small-title">
+                2149 · DEEP SPACE RESEARCH
+            </div>
+
+            <h1>ECHOES OF TIME</h1>
+
+            <h2>УАҚЫТ ЖАҢҒЫРЫҒЫ</h2>
+
+            <p class="intro-text">
+                2149 жыл.
+                Алтынай — терең ғарышты зерттейтін жас ғалым.
+                Бір күні оның кемесі адамзат бұрын-соңды тіркемеген
+                жұмбақ сигналды қабылдайды.
+            </p>
+
+            <p class="signal-text">
+                «АЛТЫНАЙ... ЕГЕР МЕНІ ЕСТІСЕҢ — УАҚЫТ ӘЛДЕҚАШАН ӨЗГЕРДІ.»
+            </p>
+
+            <button class="main-button" onclick="startGame()">
+                🚀 МИССИЯНЫ БАСТАУ
+            </button>
+
+            <div class="ai-info">
+                <span>⚡ A*</span>
+                <span>♟️ MINIMAX</span>
+                <span>🤖 ORION AI</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAME SCREEN
+    ========================== -->
+
+    <section id="gameScreen" class="screen hidden">
+
+        <!-- HEADER -->
+
+        <header class="game-header">
+
+            <div>
+                <div class="game-title">
+                    ECHOES OF TIME
+                </div>
+
+                <div class="game-subtitle">
+                    УАҚЫТ ЖАҢҒЫРЫҒЫ
+                </div>
+            </div>
+
+            <div class="header-status">
+
+                <div>
+                    <span>МИССИЯ</span>
+                    <strong id="chapterDisplay">1 / 7</strong>
+                </div>
+
+                <div>
+                    <span>УАҚЫТ</span>
+                    <strong id="timeDisplay">00:00</strong>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- MAIN LAYOUT -->
+
+        <main class="game-layout">
+
+
+            <!-- =========================
+                 LEFT PANEL
+            ========================== -->
+
+            <aside class="left-panel">
+
+                <div class="panel-title">
+                    👩‍🚀 АЛТЫНАЙ
+                </div>
+
+                <div class="character-role">
+                    Ғарыш зерттеушісі
+                </div>
+
+
+                <!-- RESOURCES -->
+
+                <div class="resources">
+
+                    <div class="resource">
+
+                        <div class="resource-info">
+                            <span>⛽ Отын</span>
+                            <span id="fuelValue">100</span>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                id="fuelBar"
+                                class="bar-fill fuel"
+                                style="width:100%">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="resource">
+
+                        <div class="resource-info">
+                            <span>🫁 Оттегі</span>
+                            <span id="oxygenValue">100</span>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                id="oxygenBar"
+                                class="bar-fill oxygen"
+                                style="width:100%">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="resource">
+
+                        <div class="resource-info">
+                            <span>⚡ Энергия</span>
+                            <span id="energyValue">100</span>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                id="energyBar"
+                                class="bar-fill energy"
+                                style="width:100%">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="resource">
+
+                        <div class="resource-info">
+                            <span>📡 Сигнал</span>
+                            <span id="signalValue">0</span>
+                        </div>
+
+                        <div class="bar">
+                            <div
+                                id="signalBar"
+                                class="bar-fill signal"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NEXT MISSION -->
+
+                <div class="next-mission">
+
+                    <div class="mission-title">
+                        🎯 КЕЛЕСІ МИССИЯ
+                    </div>
+
+                    <div id="nextMission">
+                        🚀 Миссияны бастау үшін батырманы басыңыз.
+                    </div>
+
+                </div>
+
+
+                <!-- CURRENT MISSION -->
+
+                <div class="mission-box">
+
+                    <div class="box-title">
+                        📋 НЕГІЗГІ МАҚСАТ
+                    </div>
+
+                    <p id="missionText">
+                        Жұмбақ сигналдың қайдан келгенін анықтау.
+                    </p>
+
+                </div>
+
+
+                <!-- LOG -->
+
+                <div class="log-box">
+
+                    <div class="box-title">
+                        📜 ОҚИҒАЛАР ЖУРНАЛЫ
+                    </div>
+
+                    <div id="gameLog">
+                        <div class="log-entry">
+                            Жүйе іске қосылды...
+                        </div>
+
+                        <div class="log-entry">
+                            ORION байланысқа дайын.
+                        </div>
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =========================
+                 CENTER
+            ========================== -->
+
+            <section class="center-panel">
+
+
+                <!-- STORY -->
+
+                <div class="story-box">
+
+                    <div class="location-title" id="locationTitle">
+                        🛰️ ЗЕРТТЕУ СТАНЦИЯСЫ
+                    </div>
+
+                    <div id="storyText">
+
+                        <p>
+                            Алтынай ғарыш кемесінің терезесінен
+                            шексіз қараңғылыққа қарайды.
+                        </p>
+
+                        <p>
+                            Алдында белгісіз жұлдыздар.
+                            Артында — Жер.
+                        </p>
+
+                        <p class="highlight">
+                            Бірақ радиобайланыста бір ғана сөз
+                            қайта-қайта қайталануда:
+                        </p>
+
+                        <p class="quote">
+                            «АЛТЫНАЙ...»
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAP -->
+
+                <div class="map-section">
+
+                    <div class="section-title">
+                        🗺️ ҒАРЫШ КАРТАСЫ
+                    </div>
+
+                    <div class="map" id="spaceMap">
+
+                        <button
+                            class="map-node station active"
+                            data-location="station"
+                            onclick="selectDestination('station')">
+
+                            🛰️
+                            <span>СТАНЦИЯ</span>
+
+                        </button>
+
+
+                        <button
+                            class="map-node asteroid"
+                            data-location="asteroid"
+                            onclick="selectDestination('asteroid')">
+
+                            ☄️
+                            <span>АСТЕРОИД</span>
+
+                        </button>
+
+
+                        <button
+                            class="map-node nebula"
+                            data-location="nebula"
+                            onclick="selectDestination('nebula')">
+
+                            🌌
+                            <span>ТҰМАН</span>
+
+                        </button>
+
+
+                        <button
+                            class="map-node planet"
+                            data-location="planet"
+                            onclick="selectDestination('planet')">
+
+                            🪐
+                            <span>ПЛАНЕТА</span>
+
+                        </button>
+
+
+                        <button
+                            class="map-node gate"
+                            data-location="gate"
+                            onclick="selectDestination('gate')">
+
+                            🌀
+                            <span>ҚАҚПА</span>
+
+                        </button>
+
+
+                        <button
+                            class="map-node signal-node"
+                            data-location="signal"
+                            onclick="selectDestination('signal')">
+
+                            📡
+                            <span>СИГНАЛ</span>
+
+                        </button>
+
+                    </div>
+
+                    <div class="path-info">
+                        <span>⚡ A* NAVIGATION</span>
+                        <span id="pathDisplay">
+                            Бағытты таңдаңыз
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT -->
+
+                <div
+                    id="eventBox"
+                    class="event-box hidden">
+
+                    <div id="eventTitle"></div>
+
+                    <div id="eventDescription"></div>
+
+                    <div
+                        id="eventChoices"
+                        class="event-choices">
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="actions">
+
+                    <button
+                        id="exploreButton"
+                        class="action-button"
+                        onclick="exploreLocation()">
+
+                        🔍 ЗЕРТТЕУ
+
+                    </button>
+
+
+                    <button
+                        id="signalButton"
+                        class="action-button"
+                        onclick="analyzeSignal()">
+
+                        📡 СИГНАЛДЫ ТАЛДАУ
+
+                    </button>
+
+
+                    <button
+                        id="continueButton"
+                        class="action-button"
+                        onclick="continueMission()">
+
+                        ▶️ ЖАЛҒАСТЫРУ
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 RIGHT PANEL
+            ========================== -->
+
+            <aside class="right-panel">
+
+
+                <!-- ORION -->
+
+                <div class="orion-header">
+
+                    <div class="orion-icon">
+                        ◉
+                    </div>
+
+                    <div>
+                        <div class="orion-name">
+                            ORION
+                        </div>
+
+                        <div class="orion-status">
+                            ● ONLINE
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="orion-description">
+
+                    ORION — кеменің жасанды интеллект жүйесі.
+                    Бірақ оның жауаптары әрқашан толық шындық
+                    болмауы мүмкін.
+
+                </div>
+
+
+                <!-- CHAT -->
+
+                <div
+                    id="chatMessages"
+                    class="chat-messages">
+
+                    <div class="chat-message orion">
+
+                        <strong>ORION:</strong>
+
+                        <p>
+                            Алтынай, байланыс тұрақты.
+                            Бірақ мен саған бір нәрсені
+                            ескертуім керек...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK QUESTIONS -->
+
+                <div class="quick-questions">
+
+                    <div class="quick-title">
+                        💬 СҰРАҚ ҰСЫНЫСТАРЫ
+                    </div>
+
+                    <button onclick="askQuickQuestion('Сен кімсің?')">
+                        Сен кімсің?
+                    </button>
+
+                    <button onclick="askQuickQuestion('Сигнал қайдан келді?')">
+                        Сигнал қайдан келді?
+                    </button>
+
+                    <button onclick="askQuickQuestion('Сен менен не жасырып тұрсың?')">
+                        Не жасырып тұрсың?
+                    </button>
+
+                    <button onclick="askQuickQuestion('Болашақта не болады?')">
+                        Болашақта не болады?
+                    </button>
+
+                </div>
+
+
+                <!-- CHAT INPUT -->
+
+                <div class="chat-input">
+
+                    <input
+                        id="orionInput"
+                        type="text"
+                        placeholder="ORION-ға сұрақ жазыңыз..."
+                        onkeydown="handleChatKey(event)"
+                    >
+
+                    <button onclick="sendMessage()">
+                        ➤
+                    </button>
+
+                </div>
+
+
+                <!-- MINIMAX -->
+
+                <div class="minimax-box">
+
+                    <div class="box-title">
+                        ♟️ ORION СТРАТЕГИЯСЫ
+                    </div>
+
+                    <div id="minimaxStatus">
+                        ORION келесі әрекетін есептеп жатыр...
+                    </div>
+
+                    <div class="strategy-meter">
+
+                        <div
+                            id="strategyBar"
+                            class="strategy-fill"
+                            style="width:50%">
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="strategyText"
+                        class="strategy-text">
+
+                        Стратегия анықталмады.
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </main>
+
+    </section>
+
+
+    <!-- =========================
+         END SCREEN
+    ========================== -->
+
+    <section
+        id="endingScreen"
+        class="screen ending-screen hidden">
+
+        <div class="ending-content">
+
+            <div class="ending-label">
+                MISSION COMPLETE
+            </div>
+
+            <h1 id="endingTitle">
+                УАҚЫТ ЖАҢҒЫРЫҒЫ
+            </h1>
+
+            <div
+                id="endingText"
+                class="ending-text">
+            </div>
+
+            <div
+                id="endingStats"
+                class="ending-stats">
+            </div>
+
+            <button
+                class="main-button"
+                onclick="restartGame()">
+
+                🔄 ҚАЙТА ОЙНАУ
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- SCRIPTS -->
+
+    <script src="astar.js"></script>
+    <script src="minimax.js"></script>
+    <script src="game.js"></script>
+
+</body>
+</html>
